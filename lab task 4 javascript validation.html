@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            border: 2px solid #000;
+            background: #fff;
+        }
+        .header {
+            padding: 10px;
+            border-bottom: 2px solid #000;
+        }
+        .header h2 {
+            margin: 0;
+            color: green;
+            font-style: italic;
+        }
+        .header nav {
+            float: right;
+        }
+        .header nav a {
+            margin-left: 10px;
+            text-decoration: none;
+        }
+        .content {
+            text-align: center;
+            padding: 40px 0;
+        }
+        .login-box {
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid gray;
+            text-align: left;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .login-box button {
+            padding: 5px 10px;
+        }
+        .login-box a {
+            float: right;
+            text-decoration: none;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            border-top: 2px solid black;
+        }
+        .error {
+            color: red;
+            margin: 0;
+        }
+    </style>
+    <script>
+        function validateForm(event){
+            event.preventDefault();
+            let name=document.getElementById("username");
+            let password=document.getElementById("password");
+            let nameError=document.getElementById("userError");
+            let passError=document.getElementById("passError");
+            let valid=true;
+            if(name.value.trim()===""){
+                nameError.innerText="Name is required";
+                valid=false;
+            }else{
+                nameError.innerText="";
+            }
+            if(password.value.trim()===""){
+                passError.innerText="Password is required";
+                valid=false;
+            }else{
+                passError.innerText="";
+            }
+            if(valid){
+                alert("Form submitted successfully!");
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <table width="100%">
+            <tr>
+                <td>
+                    <h2><span style="font-size:40px; font-weight:bold;">X</span>AIUB</h2>
+                </td>
+                <td align="right">
+                    <nav>
+                        <a href="#">Home</a> | <a href="#">Login</a> | <a href="#">Signup</a>
+                    </nav>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="content">
+        <div class="login-box">
+            <b>LOGIN</b>
+            <br><br>
+            Name : <input type="text" placeholder="Enter your name" id="username">
+            <p id="userError" class="error"></p>
+            Password : <input type="password" placeholder="Enter your password" id="password">
+            <p id="passError" class="error"></p>
+            <input type="checkbox"> Remember Me
+            <br><br>
+            <button onclick="validateForm(event)">Submit</button>
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+    <footer>
+        Copyright © 2017
+    </footer>
+</div>
+</body>
+</html>
