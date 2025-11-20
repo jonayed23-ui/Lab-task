@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Global Tech Connect Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"], input[type="password"], button {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+        }
+        p {
+            color: red;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        #statsBox {
+            margin-top: 20px;
+            border: 1px solid gray;
+            padding: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Event Registration Form</h2>
+
+    <label>Full Name:</label>
+    <input type="text" id="fullName" placeholder="Enter your full name">
+    <p id="nameErr"></p>
+
+    <label>Professional Email:</label>
+    <input type="text" id="email" placeholder="Enter your email">
+    <p id="emailErr"></p>
+
+    <label>Company / Institution (optional):</label>
+    <input type="text" id="company" placeholder="Enter company name">
+    <p id="companyErr"></p>
+
+    <label>Attendance Type:</label>
+    <input type="radio" name="attendance" value="Virtual"> Virtual
+    <input type="radio" name="attendance" value="In-Person"> In-Person
+    <p id="attendanceErr"></p>
+
+    <button onclick="handleSubmit()">Register</button>
+    <button onclick="showStats()">Show Event Analytics</button>
+    <button onclick="hideStats()">Hide Event Analytics</button>
+
+    <div id="statsBox">
+        <p>Total Registrants: <span id="total"></span></p>
+        <p>Virtual: <span id="virtualCount"></span></p>
+        <p>In-Person: <span id="inpersonCount"></span></p>
+    </div>
+
+    <script>
+        let count = 0;
+        let virtualCount = 0;
+        let inpersonCount = 0;
+
+        function updateStats() {
+            document.getElementById("total").innerText = count;
+            document.getElementById("virtualCount").innerText = virtualCount;
+            document.getElementById("inpersonCount").innerText = inpersonCount;
+        }
+        
+        function showStats() {
+            updateStats();
+            document.getElementById("statsBox").style.display = "block";
+        }
+
+        function hideStats() {
+            document.getElementById("statsBox").style.display = "none";
+        }
+
+        function handleSubmit() {
+            const fullName = document.getElementById("fullName").value;
+            const email = document.getElementById("email").value;
+            const company = document.getElementById("company").value;
+            const attendanceEls = document.getElementsByName("attendance");
+
+            let valid = true;
+            let attendance = "";
+
+            if (!fullName || fullName.length < 6 || fullName.length > 100) {
+                document.getElementById("nameErr").innerHTML = "Name must be between 6 and 100 characters.";
+                valid = false;
+            } else {
+                document.getElementById("nameErr").innerHTML = "";
+            }
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!email || !emailPattern.test(email)) {
+                document.getElementById("emailErr").innerHTML = "Please enter a valid professional email address.";
+                valid = false;
+            } else {
+                document.getElementById("emailErr").innerHTML = "";
+            }
+
+            if (company.length > 100) {
+                document.getElementById("companyErr").innerHTML = "Company name cannot exceed 100 characters.";
+                valid = false;
+            } else {
+                document.getElementById("companyErr").innerHTML = "";
+            }
+
+            for (let i = 0; i < attendanceEls.length; i++) {
+                if (attendanceEls[i].checked) {
+                    attendance = attendanceEls[i].value;
+                    break;
+                }
+            }
+            if (!attendance) {
+                document.getElementById("attendanceErr").innerHTML = "Please select your attendance type.";
+                valid = false;
+            } else {
+                document.getElementById("attendanceErr").innerHTML = "";
+            }
+
+            if (valid) {
+                count++;
+                if (attendance === "Virtual") virtualCount++;
+                else inpersonCount++;
+
+                alert("Registration Successful!");
+                document.getElementById("fullName").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("company").value = "";
+                for (let i = 0; i < attendanceEls.length; i++) attendanceEls[i].checked = false;
+
+                updateStats();
+            }
+        }
+    </script>
+</body>
+</html>
